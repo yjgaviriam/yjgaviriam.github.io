@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>¿Quieres ser mi San Valentín, princesa pom? ❤️</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #ffe6e6;
+        }
+        .container {
+            margin-top: 100px;
+        }
+        .btn {
+            padding: 10px 20px;
+            margin: 10px;
+            font-size: 20px;
+            cursor: pointer;
+            border-radius: 5px;
+            border: none;
+        }
+        .yes {
+            background-color: #ff4d4d;
+            color: white;
+            font-size: 20px;
+        }
+        .no {
+            background-color: #ccc;
+            font-size: 20px;
+        }
+        .gif-container {
+            margin-top: 20px;
+        }
+        .question-img {
+            width: 200px;
+            margin: 20px auto;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 id="question">¿Quieres ser mi San Valentín, pomisita? ❤️</h1>
+        <img id="questionImg" class="question-img" src="https://i.imgur.com/YOUR_IMAGE_HERE.jpg" alt="Dudu y Bubu" />
+        <button class="btn yes" onclick="accept()" id="yesButton">Sí, pom</button>
+        <button class="btn no" onclick="moveNo()" id="noButton">No, pomi</button>
+        <p id="confirmation"></p>
+        <div class="gif-container" id="gifContainer" style="display: none;">
+            <img src="https://media.tenor.com/YBIR7H3gpVYAAAAd/pomeranian-dogs.gif" alt="Pomeranios queriéndose, pom" width="300">
+        </div>
+    </div>
+
+    <script>
+        let noCount = 0;
+        let originalQuestions = [
+            "¿Estás segura, pom? 😢", "¿De verdad no quieres, pomisito? 🥺", "Piénsalo otra vez, pomeriansito... 😔", 
+            "¡Vamos, di que sí, princesa pom! 🥰", "Si dices que sí, te doy un pomiabrazo 🐶", "¿Qué tal si lo piensas otra vez, pom? 🤔", 
+            "No seas así, pom... 😭", "Yo sé que en el fondo quieres decir que sí, pomi", "Si dices que sí, habrá dulces y amor pomeriano 🍬❤️", 
+            "¿Me romperás mi pomcorazón? 💔", "Te prometo que será el mejor San Valentín, pom 😊", "No me dejes solo, pomisito 😭", 
+            "Piénsalo con amor pomeriano 🐾", "Solo di que sí, pom", "Cada vez que dices que no, un pom llora 🐶💔"
+        ];
+        
+        let questions = [...originalQuestions].sort(() => Math.random() - 0.5);
+
+        function accept() {
+            document.getElementById("question").innerHTML = "¡Sabía que dirías que sí, pomisita! ❤️🥰";
+            document.getElementById("noButton").style.display = "none";
+            document.getElementById("confirmation").innerHTML = "Eres la mejor, princesa pom! 💖";
+            document.getElementById("gifContainer").style.display = "block";
+        }
+
+        function moveNo() {
+            if (noCount >= questions.length) {
+                noCount = 0;
+                questions = [...originalQuestions].sort(() => Math.random() - 0.5);
+            }
+            document.getElementById("question").innerHTML = questions[noCount];
+            document.getElementById("questionImg").src = "https://i.imgur.com/YOUR_NEW_IMAGE_HERE.jpg";
+            noCount++;
+            
+            let button = document.getElementById("noButton");
+            let x = Math.random() * (window.innerWidth - 100);
+            let y = Math.random() * (window.innerHeight - 50);
+            button.style.position = "absolute";
+            button.style.left = `${x}px`;
+            button.style.top = `${y}px`;
+            
+            let yesButton = document.getElementById("yesButton");
+            let currentYesSize = parseInt(window.getComputedStyle(yesButton).fontSize);
+            yesButton.style.fontSize = `${currentYesSize * 1.26}px`; // Crece un 10% más lento
+            
+            let currentNoSize = parseInt(window.getComputedStyle(button).width);
+            button.style.width = `${currentNoSize * 0.91}px`; // Se reduce un 10% más lento
+            
+            if (button.offsetWidth < 50) {
+                let noTextSize = parseInt(window.getComputedStyle(button).fontSize);
+                button.style.fontSize = `${noTextSize * 0.91}px`; // Solo reduce el texto si el botón ya es muy pequeño
+            }
+            
+            if (Math.random() > 0.5) {
+                yesButton.innerHTML = "Sí, pomi";
+                button.innerHTML = "No, pom";
+            } else {
+                yesButton.innerHTML = "Sí, pom";
+                button.innerHTML = "No, pomi";
+            }
+        }
+    </script>
+</body>
+</html>
